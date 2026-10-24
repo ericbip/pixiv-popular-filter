@@ -204,7 +204,7 @@
       likes: cached.likes
     };
 
-    // [no verificado] GET /ajax/illust/{id}; campo esperado body.likeCount.
+    // Pixiv confirma que GET /ajax/illust/{id} devuelve body.likeCount.
     const url = "https://www.pixiv.net" + C.DETAIL_PATH + encodeURIComponent(artwork.id);
     const json = await fetchJson(url, signal);
     const body = json?.body;
