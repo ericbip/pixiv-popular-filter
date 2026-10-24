@@ -1,0 +1,22 @@
+{
+  "manifest_version": 3,
+  "name": "Pixiv Popular Tag Filter",
+  "version": "1.0.0",
+  "description": "Filtra obras de un tag de Pixiv por número de likes.",
+  "permissions": ["storage"],
+  "host_permissions": ["https://www.pixiv.net/*"],
+  "content_scripts": [
+    {
+      "matches": ["https://www.pixiv.net/*"],
+      "js": ["constants.js", "content.js"],
+      "css": ["styles.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "pixiv-popular-filter@example.invalid",
+      "strict_min_version": "128.0"
+    }
+  }
+}
