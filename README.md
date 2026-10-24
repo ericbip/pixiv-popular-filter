@@ -1,6 +1,6 @@
 # Pixiv Popular Tag Filter
 
-Extensión MV3 para Chrome que añade un panel a páginas de resultados de tags de Pixiv y ordena las obras por likes.
+Extensión MV3 para Chrome que añade un panel a páginas de resultados de tags de Pixiv y ordena las obras por número de likes.
 
 ## Instalación
 
@@ -12,13 +12,21 @@ Extensión MV3 para Chrome que añade un panel a páginas de resultados de tags 
 
 ## Uso
 
-- Configura los likes mínimos.
-- Elige entre 1 y 10 páginas.
+- Configura el número mínimo de likes.
+- Elige entre 1 y 10 páginas para analizar.
 - Pulsa **Buscar populares**. Puedes cancelar el escaneo.
-- Los detalles consultados se guardan en `chrome.storage.local` durante 24 horas.
+- Las obras que cumplen el mínimo se ordenan de mayor a menor según `body.likeCount`.
+- Los detalles consultados se guardan en `chrome.storage.local` durante 24 horas para reducir solicitudes repetidas.
 
-## Endpoints internos
+## Respuestas de Pixiv verificadas
 
-Los endpoints AJAX de Pixiv no son API oficiales y pueden cambiar. Comprueba las rutas y los campos marcados como `[no verificado]` en `constants.js` con DevTools → Network → Fetch/XHR. No se garantiza que los nombres de campos sigan vigentes.
+Las respuestas observadas en DevTools muestran:
 
-La extensión usa la sesión ya iniciada en Pixiv; no solicita ni almacena credenciales.
+- Búsqueda: `body.illustManga.data`, con campos `id`, `title` y `url`.
+- Detalle de una obra: `body.likeCount`, `body.bookmarkCount` y `body.viewCount`; la extensión usa `likeCount` para ordenar.
+
+Los endpoints AJAX son internos de Pixiv, no una API oficial, y pueden cambiar. La extensión utiliza la sesión ya iniciada en Pixiv; no solicita ni almacena credenciales.
+
+## Diagnóstico
+
+Si Pixiv cambia el formato o limita las solicitudes, revisa DevTools → Network → Fetch/XHR y vuelve a cargar la extensión desde `chrome://extensions/`. Si aparece HTTP 429, espera antes de iniciar otro escaneo.
